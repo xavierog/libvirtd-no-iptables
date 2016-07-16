@@ -1,0 +1,16 @@
+#!/bin/bash
+export LD_PRELOAD="$(readlink -f no-iptables.so)"
+
+for exe in 'iptables' 'ip6tables'; do
+	echo "Executing ${exe}"
+	bash -c "${exe}"
+	echo "----------------------------------------"
+
+	echo "Executing ${exe} --version"
+	bash -c "${exe} --version"
+	echo "----------------------------------------"
+
+	echo "Executing ${exe} -L -n"
+	bash -c "${exe} -L -n"
+	echo "----------------------------------------"
+done
