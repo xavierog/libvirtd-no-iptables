@@ -5,7 +5,7 @@
 	If needed, add -DNOIPTABLES_DEBUG
 	Usage: LD_PRELOAD=/path/to/no-iptables.so libvirtd
 
-	(c) 2016 - Xavier G.
+	(c) 2016-2019 - Xavier G.
 	This program is free software. It comes without any warranty, to
 	the extent permitted by applicable law. You can redistribute it
 	and/or modify it under the terms of the Do What The Fuck You Want
