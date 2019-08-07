@@ -62,7 +62,8 @@ int execve(const char *filename, char *const *argv, char *const *envp) {
 	}
 
 	/* Determine whether libvirtd is trying to call iptables: */
-	if (!strncmp(filename, "/sbin/iptables", 15) || !strncmp(filename, "/sbin/ip6tables", 16)) {
+	if (!strncmp(filename, "/sbin/iptables", 15) || !strncmp(filename, "/sbin/ip6tables", 16) ||
+	    !strncmp(filename, "/usr/sbin/iptables", 19) || !strncmp(filename, "/usr/sbin/ip6tables", 20)) {
 #ifdef NOIPTABLES_DEBUG
 		dprintf(2, "OMG it's calling %s!\n", filename);
 #endif
