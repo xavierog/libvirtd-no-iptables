@@ -44,6 +44,7 @@ int execv(const char *filename, char *const *argv) {
 
 int execve(const char *filename, char *const *argv, char *const *envp) {
 	char *error_string;
+	unsigned int arg_index;
 
 	/* Ask the linker to provide us with the actual execve symbol: */
 	if (!actual_execve) {
@@ -68,11 +69,13 @@ int execve(const char *filename, char *const *argv, char *const *envp) {
 		dprintf(2, "OMG it's calling %s!\n", filename);
 #endif
 		/* Do not interfere when libvirtd tries to run iptables --version: */
-		if (argv[0] && argv[1] && !strncmp(argv[1], "--version", 10)) {
+		for (arg_index = 0; argv[arg_index]; ++ arg_index) {
+			if (!strncmp(argv[arg_index], "--version", 10) || !strncmp(argv[arg_index], "-V", 3)) {
 #ifdef NOIPTABLES_DEBUG
-			dprintf(2, "Oh, it's ok, it's just calling %s --version.\n", filename);
+				dprintf(2, "Oh, it's ok, it's just calling %s --version.\n", filename);
 #endif
-			goto let_it_go;
+				goto let_it_go;
+			}
 		}
 		/* Refuse to run the program: */
 		return actual_execve(noexec_filename, noexec_argv, noexec_envp);
